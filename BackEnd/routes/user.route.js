@@ -109,4 +109,25 @@ router.post("/SOSnumber", async (req, res) => {
   }
 });
 
-module.exports = router
+//get SOS number
+router.get("/getSOSnumber", async (req, res) => {
+  try {
+    const {email} = req.body;
+
+    existingUser = (await User.findOne({email})) ;
+    if (existingUser) {
+      existingUser.SOSnumber;
+      res.json(existingUser.SOSnumber);
+    }
+    else
+    {
+        return res
+        .status(400)
+        .json({ msg: "No such user found!" });
+    }
+
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }});
+
+module.exports = router;
