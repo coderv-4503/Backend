@@ -23,6 +23,14 @@ const userSchema = mongoose.Schema({
   password: {
     required: true,
     type: String,
+     validate: {
+      validator: (value) => {
+        const regex =
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        return value.match(regex);
+      },
+      message: "Password must contain minimum eight characters, at least one letter, one number and one special character",
+     },
   },
   number:{
     required: true,
@@ -31,7 +39,7 @@ const userSchema = mongoose.Schema({
     validate: {
       validator: (value) => {
         const regex =
-          /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/i;
+          /^([0|\+[0-9]{1,5})?([6-9][0-9]{9})$/i;
         return value.match(regex);
       },
       message: "Please enter a valid mobile number",
